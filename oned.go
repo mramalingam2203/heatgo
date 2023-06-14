@@ -88,10 +88,9 @@ func DuFort_Frankel_Explicit_Scheme(delta_x float64, delta_t float64, output_tim
 			numerical[i][n+1] = ((2.0*r)/(1.0+2.0*r))*numerical[i-1][n] + ((2.0*r)/(1.0+2.0*r))*numerical[i+1][n] + ((1.0-2.0*r)/(1.0+2.0*r))*numerical[i][n-1]
 		}
 	}
-
 }
 
-func explicit() {
+func Richardson_Explicit_Scheme(delta_x float64, delta_t float64, output_time float64, nodes int32, r float64, T_sur float64, T_init float64) {
 
 }
 
