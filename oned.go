@@ -46,16 +46,15 @@ func explicit_matlab(ntime int32, nx int32, dt float32, T_left float32, T_right 
 	// fmt.Println(T)
 }
 
-func exact(nodes int32, Diff float32, output_time float32, delta_x float32, length float32, T_sur float32,
-	T_init float32) {
+func exact(nodes int32, Diff float64, output_time float64, delta_x float64, length float64, T_sur float64,
+	T_init float64) {
 	var series float64
-	for i := 0; i < nodes; i++ {
+	var acc int32 = 0
+	for i := 0; i < int(nodes); i++ {
 		series = 0
-		for m := 1; m <= acc; m++ {
-			series += 1 //(math.Exp(-Diff*output_time*pow((m*pi)/length, 2)) * ((1.0 - math.Pow(-1.0, m)) / (m * pi)) * math.Sin((m*pi*i*delta_x)/length))
+		for m := 1; m <= int(acc); m++ {
+			series += math.Exp(-Diff*output_time*math.Pow((float64(m)*math.Pi)/length, 2)) * ((1.0 - math.Pow(-1.0, float64(m))) / (float64(m) * math.Pi)) * math.Sin((float64(m)*math.Pi*float64(i)*delta_x)/length)
 		}
-		exact[i] = T_sur + 2*(T_init-T_sur)*series
-		v1.push_back(exact[i])
 	}
 
 }
