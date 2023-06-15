@@ -116,6 +116,25 @@ func Richardson_Explicit_Scheme(delta_x float64, delta_t float64, output_time fl
 
 }
 
+func TDMA_Solver(lower_diag []float64, main_diag []float64, upper_diag []float64, b []float64, nodes int) {
+	nodes = nodes - 2
+	nodes--
+	upper_diag[0] /= main_diag[0]
+	b[0] /= main_diag[0]
+
+	for i := 1; i < nodes; i++ {
+		upper_diag[i] /= main_diag[i] - lower_diag[i]*upper_diag[i-1]
+		b[i] = (b[i] - lower_diag[i]*b[i-1]) / (main_diag[i] - lower_diag[i]*upper_diag[i-1])
+	}
+
+	b[nodes] = (b[nodes] - lower_diag[nodes]*b[nodes-1]) / (main_diag[nodes] - lower_diag[nodes]*upper_diag[nodes-1])
+
+	for i := nodes; i > 0; i-- {
+		b[i] -= upper_diag[i] * b[i+1]
+	}
+
+}
+
 func main() {
 	var xmin, xmax, dX, dt, maxtime, rvalue, alpha, Tl, Tr float32
 	var nX, nt int32
