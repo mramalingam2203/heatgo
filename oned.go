@@ -128,6 +128,29 @@ func Laasonen_Simple_Implicit_Scheme(numerical *[][] float64, delta_x float64, d
 		numerical[i][0] = T_init;					
 	}
 
+  for n := 0; n < int(output_time / delta_t); n++ {
+		for k := 0; k < nodes - 3; k++ {
+			upper_diag[k] = -r;
+		}
+
+		for k := 0; k < nodes - 2; k++ {
+			if (k == 0) {
+				b[k] = numerical[k + 1][n] + r * T_sur;
+			}
+			else if (k == nodes - 3) {
+				b[k] = numerical[k + 1][n] + r * T_sur;
+			}
+			else {
+				b[k] = numerical[k + 1][n];
+			}
+		}
+
+		TDMA_Solver(lower_diag, main_diag, upper_diag, b, nodes);
+		for (int i = 0; i < nodes - 2; i++) {
+			numerical[i + 1][n + 1] = b[i];
+		}
+	}
+	
 }
 
 func Crank_Nicholson_Implicit_Scheme(numerical *[][] float64, delta_x float64, delta_t float64, double output_time float64, nodes int, r float64, T_sur float64, T_init float64) {
