@@ -116,6 +116,25 @@ func Richardson_Explicit_Scheme(delta_x float64, delta_t float64, output_time fl
 
 }
 
+func Laasonen_Simple_Implicit_Scheme(numerical *[][] float64, delta_x float64, delta_t float64, double output_time float64, nodes int, r float64, T_sur float64, T_init float64) {
+
+  
+	for n := 0; n <= int(output_time / delta_t); n++ {
+		numerical[0][n] = T_sur;
+		numerical[nodes - 1][n] = T_sur;
+	}
+
+	for i := 1; i < (nodes - 1); i++ {
+		numerical[i][0] = T_init;					
+	}
+
+}
+
+func Crank_Nicholson_Implicit_Scheme(numerical *[][] float64, delta_x float64, delta_t float64, double output_time float64, nodes int, r float64, T_sur float64, T_init float64) {
+
+}
+
+
 func TDMA_Solver(lower_diag []float64, main_diag []float64, upper_diag []float64, b []float64, nodes int) {
 	nodes = nodes - 2
 	nodes--
