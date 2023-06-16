@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>SOLVER SUITE</h1>
+
+<p>Select a solver with the following directions</p>
+
+<form action="/action_page.php">
+<p>
+  <label for="heatmode">Heat mode:</label>
+  <select name="heatmode id="heatmode">
+    <option value="conduction">Conduction</option>
+    <option value="radiation">Radiation</option>
+  </select>
+  <br><br>
+</p>
+<label for="dimensionmode">Dimension:</label>
+<select name="dimensionmode id="dimension">
+  <option value="1d">!D</option>
+  <option value="2d">2D</option>
+  <option value="3d">3D</option>
+</select>
+<br><br>
+</p>
+  <label for="computemode">Compute  mode:</label>
+  <select name="computemode id="computemode">
+    <option value="explicit">Explicit</option>
+    <option value="implicit">Implicit</option>
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<p>Click the "Submit" button and the form-data will be sent to a page on the 
+server called "action_page.php".</p>
+
+</body>
+</html>
