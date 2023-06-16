@@ -1,4 +1,4 @@
-var countryStateInfo = {
+var solverInfo = {
 	"Conduction": {
 		"FDM": {
 			"1D": ["Dirichlet", "Neumann", "Robin"],
@@ -31,7 +31,7 @@ window.onload = function () {
 	var bcSel = document.getElementById("bcSel");
 	
 	//Load countries
-	for (var country in countryStateInfo) {
+	for (var country in solverInfo) {
 		heatSel.options[heatSel.options.length] = new Option(country, country);
 	}
 	
@@ -45,7 +45,7 @@ window.onload = function () {
 		 if (this.selectedIndex < 1)
 			 return; // done
 		 
-		 for (var state in countryStateInfo[this.value]) {
+		 for (var state in solverInfo[this.value]) {
 			 finiteSel.options[finiteSel.options.length] = new Option(state, state);
 		 }
 	}
@@ -59,7 +59,7 @@ window.onload = function () {
 		 if (this.selectedIndex < 1)
 			 return; // done
 		 
-		 for (var city in countryStateInfo[heatSel.value][this.value]) {
+		 for (var city in solverInfo[heatSel.value][this.value]) {
 			 dimnSel.options[dimnSel.options.length] = new Option(city, city);
 		 }
 	}
@@ -71,7 +71,7 @@ window.onload = function () {
 		if (this.selectedIndex < 1)
 			return; // done
 		
-		var zips = countryStateInfo[heatSel.value][finiteSel.value][this.value];
+		var zips = solverInfo[heatSel.value][finiteSel.value][this.value];
 		for (var i = 0; i < zips.length; i++) {
 			bcSel.options[bcSel.options.length] = new Option(zips[i], zips[i]);
 		}
