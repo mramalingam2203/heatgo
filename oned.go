@@ -3,6 +3,24 @@ package main
 import (
 	"fmt"
 	"math"
+
+
+	"image"
+	"image/color"
+	"image/draw"
+	"image/png"
+	"log"
+	"math"
+	"math/rand"
+	"os"
+	"sort"
+	"time"
+
+	"github.com/ajstarks/svgo"
+	"github.com/vdobler/chart"
+	"github.com/vdobler/chart/imgg"
+	"github.com/vdobler/chart/svgg"
+	"github.com/vdobler/chart/txtg"
 )
 
 var pi float64 = 4 * math.Atan(1.0)
@@ -42,7 +60,6 @@ func explicit_matlab(ntime int32, nx int32, dt float32, T_left float32, T_right 
 		}
 
 	}
-	fmt.Println(T)
 
 }
 
