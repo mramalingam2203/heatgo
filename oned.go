@@ -17,7 +17,7 @@ func explicit_matlab(ntime int32, nx int32, dt float32, T_left float32, T_right 
 	}
 
 	for j := 0; j < int(nx); j++ {
-		T0[j] = T_right
+		T0[j] = T_left
 	}
 
 	for i := 0; i < int(ntime); i++ {
@@ -38,12 +38,12 @@ func explicit_matlab(ntime int32, nx int32, dt float32, T_left float32, T_right 
 		}
 
 		for j := 0; j < int(nx); j++ {
-			T0[j] = T0[j]
+			T0[j] = T[j]
 		}
 
 	}
+	fmt.Println(T)
 
-	// fmt.Println(T)
 }
 
 func exact(nodes int32, Diff float64, output_time float64, delta_x float64, length float64, T_sur float64,
@@ -116,6 +116,7 @@ func Richardson_Explicit_Scheme(delta_x float64, delta_t float64, output_time fl
 
 }
 
+/*
 func Laasonen_Simple_Implicit_Scheme(numerical *[][]float64, delta_x float64, delta_t float64, output_time float64, nodes int, r float64, T_sur float64, T_init float64) {
 
 	for n := 0; n <= int(output_time/delta_t); n++ {
@@ -154,7 +155,7 @@ func Laasonen_Simple_Implicit_Scheme(numerical *[][]float64, delta_x float64, de
 	}
 
 }
-
+*/
 func Crank_Nicholson_Implicit_Scheme(numerical *[][]float64, delta_x float64, delta_t float64, output_time float64, nodes int, r float64, T_sur float64, T_init float64) {
 
 }
@@ -181,14 +182,17 @@ func TDMA_Solver(lower_diag []float64, main_diag []float64, upper_diag []float64
 func main() {
 	var xmin, xmax, dX, dt, maxtime, rvalue, alpha, Tl, Tr float32
 	var nX, nt int32
-	xmin = 0.0
-	xmax = 1.0
+
+	alpha = 0.05
+	xmin = 0
+	xmax = 0.2
 	nX = 100
-	maxtime = 25
-	nt = 100
-	alpha = 1e-4
-	Tl = 0.0
-	Tr = 100.0
+	Tl = 150.0
+	Tr = 300.0
+	dX = (xmax - xmin) / float32(nX-1)
+	dt = 4.0812e-2
+	maxtime = 1000
+	nt = int32(maxtime / dt)
 
 	dX = float32(xmax-xmin) / float32(nX-1)
 	dt = float32(maxtime) / float32(nt)
