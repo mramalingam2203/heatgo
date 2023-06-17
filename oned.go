@@ -1,32 +1,45 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
+	"log"
 	"math"
+	"os"
 )
 
 var pi float64 = 4 * math.Atan(1.0)
 
-func explicit_matlab(ntime int32, nx int32, dt float64, T_left float64, T_right float64, r float64) {
+func explicit_matlab(ntime int, nx int, dt float64, T_left float64, T_right float64, r float64) {
 	t := make([]float64, ntime)
 	T := make([]float64, nx)
 	T0 := make([]float64, nx)
 
-	for i := 0; i < int(ntime); i++ {
+	// Open the file for writing
+	file, err := os.Create("output.csv")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	// Create a CSV writer
+	writer := csv.NewWriter(file)
+
+	for i := 0; i < ntime; i++ {
 		t[i] = float64(i) * dt
 	}
 
-	for j := 0; j < int(nx); j++ {
+	for j := 0; j < nx; j++ {
 		T0[j] = T_left
 	}
 
-	for i := 0; i < int(ntime); i++ {
+	for i := 0; i < ntime; i++ {
 
-		for j := 0; j < int(nx); j++ {
+		for j := 0; j < nx; j++ {
 			T[j] = T0[j]
 		}
 
-		for k := 0; k < int(nx); k++ {
+		for k := 0; k < nx; k++ {
 			if k == 0 {
 				T[k] = T_left
 			} else if k == int(nx-1) {
@@ -37,7 +50,24 @@ func explicit_matlab(ntime int32, nx int32, dt float64, T_left float64, T_right 
 
 		}
 
-		for j := 0; j < int(nx); j++ {
+		// Convert each float in the slice to a string and write a single row
+		for _, value := range T {
+			row := []string{fmt.Sprintf("%.2f", value)} // Format the float value to two decimal places
+			err := writer.Write(row)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+
+		// Flush any buffered data to the underlying writer (file)
+		writer.Flush()
+
+		// Check for any errors that occurred during the flush
+		if err := writer.Error(); err != nil {
+			log.Fatal(err)
+		}
+
+		for j := 0; j < nx; j++ {
 			T0[j] = T[j]
 		}
 
@@ -45,20 +75,20 @@ func explicit_matlab(ntime int32, nx int32, dt float64, T_left float64, T_right 
 
 }
 
-func exact(nodes int32, Diff float64, output_time float64, delta_x float64, length float64, T_sur float64,
+func exact(nodes int, Diff float64, output_time float64, delta_x float64, length float64, T_sur float64,
 	T_init float64) {
 	var series float64
 	var acc int32 = 0
 	exact := make([]float64, nodes)
 
-	for i := 0; i < int(nodes); i++ {
+	for i := 0; i < nodes; i++ {
 		series = 0
 		for m := 1; m <= int(acc); m++ {
 			series += math.Exp(-Diff*output_time*math.Pow((float64(m)*math.Pi)/length, 2)) * ((1.0 - math.Pow(-1.0, float64(m))) / (float64(m) * math.Pi)) * math.Sin((float64(m)*math.Pi*float64(i)*delta_x)/length)
 		}
 	}
 
-	for i := 0; i < int(nodes); i++ {
+	for i := 0; i < nodes; i++ {
 		exact[i] = T_sur + 2*(T_init-T_sur)*series
 		fmt.Println(exact[i])
 	}

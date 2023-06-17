@@ -25,6 +25,7 @@ import (
 )
 
 func main() {
+
 	// Variables meant for 1-D calculations only
 
 	/*
@@ -43,15 +44,15 @@ func main() {
 	var xmin, xmax, dX, dt, maxtime, rvalue, alpha, Tl, Tr float64
 	var nX, nt int
 
-	alpha = 0.0005
+	alpha = 0.05
 	xmin = 0
-	xmax = 0.2
-	nX = 10
-	Tl = 300.0
+	xmax = 1.0
+	nX = 50
+	Tl = 0.0
 	Tr = 300.0
 	dX = (xmax - xmin) / float64(nX-1)
-	dt = 4.0812e-2
-	maxtime = 10
+	dt = 4.0812e-1
+	maxtime = 100
 	nt = int(maxtime / dt)
 
 	dX = float64(xmax-xmin) / float64(nX-1)
@@ -61,8 +62,8 @@ func main() {
 	rvalue = alpha * dt / dX * dX
 	fmt.Println(rvalue)
 
-	//explicit_matlab(nt, nX, dt, Tl, Tr, rvalue)
-	//exact(nX, float64(alpha), float64(maxtime), float64(dX), float64(1.0), float64(Tr), float64(Tl))
-	DuFort_Frankel_Explicit_Scheme(nt, nX, dX, dt, maxtime, rvalue, Tr, Tl)
+	explicit_matlab(nt, nX, dt, Tl, Tr, rvalue)
+	exact(nX, float64(alpha), float64(maxtime), float64(dX), float64(1.0), float64(Tr), float64(Tl))
+	//DuFort_Frankel_Explicit_Scheme(nt, nX, dX, dt, maxtime, rvalue, Tr, Tl)
 
 }
