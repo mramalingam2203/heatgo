@@ -52,7 +52,7 @@ func main() {
 	Tr = 300.0
 	dX = (xmax - xmin) / float64(nX-1)
 	dt = 4.0812e-1
-	maxtime = 100
+	maxtime = 1000
 	nt = int(maxtime / dt)
 
 	dX = float64(xmax-xmin) / float64(nX-1)
