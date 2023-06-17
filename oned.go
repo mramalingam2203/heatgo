@@ -10,7 +10,7 @@ import (
 
 var pi float64 = 4 * math.Atan(1.0)
 
-func explicit_matlab(ntime int, nx int, dt float64, T_left float64, T_right float64, r float64) {
+func explicit_matlab(ntime int, nx int, dt float64, dx float64, T_left float64, T_right float64, r float64) {
 	t := make([]float64, ntime)
 	T := make([]float64, nx)
 	T0 := make([]float64, nx)
@@ -49,14 +49,15 @@ func explicit_matlab(ntime int, nx int, dt float64, T_left float64, T_right floa
 			}
 
 		}
-
+		k := 0
 		// Convert each float in the slice to a string and write a single row
 		for _, value := range T {
-			row := []string{fmt.Sprintf("%.2f", value)} // Format the float value to two decimal places
+			row := []string{fmt.Sprintf("%.2f %.2f %.3f", float64(i)*dt, float64(k)*dx, value)} // Format the float value to two decimal places
 			err := writer.Write(row)
 			if err != nil {
 				log.Fatal(err)
 			}
+			k++
 		}
 
 		// Flush any buffered data to the underlying writer (file)
@@ -65,6 +66,10 @@ func explicit_matlab(ntime int, nx int, dt float64, T_left float64, T_right floa
 		// Check for any errors that occurred during the flush
 		if err := writer.Error(); err != nil {
 			log.Fatal(err)
+		}
+
+		for j := 0; j < nx; j++ {
+			fmt.Sprintf("%[2]d %[1]d\n", j, T[j])
 		}
 
 		for j := 0; j < nx; j++ {

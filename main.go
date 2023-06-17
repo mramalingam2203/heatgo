@@ -62,8 +62,8 @@ func main() {
 	rvalue = alpha * dt / dX * dX
 	fmt.Println(rvalue)
 
-	explicit_matlab(nt, nX, dt, Tl, Tr, rvalue)
-	exact(nX, float64(alpha), float64(maxtime), float64(dX), float64(1.0), float64(Tr), float64(Tl))
+	explicit_matlab(nt, nX, dt, dX, Tl, Tr, rvalue)
+	//exact(nX, float64(alpha), float64(maxtime), float64(dX), float64(1.0), float64(Tr), float64(Tl))
 	//DuFort_Frankel_Explicit_Scheme(nt, nX, dX, dt, maxtime, rvalue, Tr, Tl)
 
 }
