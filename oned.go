@@ -86,9 +86,9 @@ func DuFort_Frankel_Explicit_Scheme(nt int, nodes int, delta_x float64, delta_t 
 	for i := 0; i < nt; i++ {
 		numerical[i] = make([]float64, nodes)
 	}
-	fmt.Println(len(numerical[0]))
+
 	for n := 0; n < nodes; n++ {
-		numerical[0][n] = T_sur       // BC at 0 and all n (node #0)
+		numerical[0][n] = T_init      // BC at 0 and all n (node #0)
 		numerical[nodes-1][n] = T_sur // BC at 31 and all n (node #last_node)
 	}
 
@@ -200,18 +200,33 @@ func TDMA_Solver(lower_diag []float64, main_diag []float64, upper_diag []float64
 }
 
 func main() {
+	// Variables meant for 1-D calculations only
+
+	/*
+		xmin - minimum value of x
+		xmax - maximum value of x
+		dX - distance inrements
+		dt - time increment
+		maxtime - total time extent
+		r - Courant Number = alpha*dt/dx*dx
+		alpha - thermal diffusivity = rho*cp/K
+		Tl - Non-dimensional Temperature at left end
+		Tr - non-dimensional temperature at right end
+		nx - total number of nodes in X-direction
+		nt - total number of time steps
+	*/
 	var xmin, xmax, dX, dt, maxtime, rvalue, alpha, Tl, Tr float64
 	var nX, nt int
 
-	alpha = 0.05
+	alpha = 0.0005
 	xmin = 0
 	xmax = 0.2
-	nX = 100
-	Tl = 150.0
+	nX = 10
+	Tl = 300.0
 	Tr = 300.0
 	dX = (xmax - xmin) / float64(nX-1)
 	dt = 4.0812e-2
-	maxtime = 1000
+	maxtime = 10
 	nt = int(maxtime / dt)
 
 	dX = float64(xmax-xmin) / float64(nX-1)
