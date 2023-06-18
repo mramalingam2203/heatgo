@@ -47,12 +47,12 @@ func main() {
 	alpha = 0.05
 	xmin = 0
 	xmax = 1.0
-	nX = 50
+	nX = 5
 	Tl = 0.0
 	Tr = 300.0
 	dX = (xmax - xmin) / float64(nX-1)
-	dt = 4.0812e-1
-	maxtime = 1000
+	dt = 1
+	maxtime = 10
 	nt = int(maxtime / dt)
 
 	dX = float64(xmax-xmin) / float64(nX-1)

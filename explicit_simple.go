@@ -51,11 +51,14 @@ func explicit_matlab(ntime int, nx int, dt float64, dx float64, T_left float64, 
 		}
 		k := 0
 		// Convert each float in the slice to a string and write a single row
+
 		for _, value := range T {
 			row := []string{fmt.Sprintf("%.2f %.2f %.3f", float64(i)*dt, float64(k)*dx, value)} // Format the float value to two decimal places
-			err := writer.Write(row)
-			if err != nil {
-				log.Fatal(err)
+			if i%100 == 0 {
+				err := writer.Write(row)
+				if err != nil {
+					log.Fatal(err)
+				}
 			}
 			k++
 		}
