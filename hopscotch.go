@@ -31,4 +31,16 @@ func Hopscotch(nt int, nx int, ny int, delta_t float64, delta_x float64, delta_y
 		}
 	}
 
-}
+	for t := 1; t < ntime; t++ {
+		for i := 1; i < nx; i++{
+			for j:=1; j < ny; j++{
+				if (i+j+t) % 2 ==0 {
+					T[t][i][j] = alpha * deltat * T[t-1][i][j]*(delta_x*delta_x + delta_y*delta_y)
+				}
+			}
+		}
+	}
+
+
+
+	
